@@ -49,7 +49,7 @@ def predict_loan(
 
     prediction = model.predict(input_data)
 
-    if prediction[0] == 1:
+    if prediction[0] == 0:
         return "✅ Loan Approved"
     else:
         return "❌ Loan Rejected"
