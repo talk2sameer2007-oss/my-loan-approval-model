@@ -1,9 +1,11 @@
+import os
 import gradio as gr
 import joblib
 import pandas as pd
 
-# Load the trained model
+# Load trained model
 model = joblib.load("my_loan_approval_model.pkl")
+
 
 def predict_loan(
     no_of_dependents,
@@ -18,7 +20,7 @@ def predict_loan(
     luxury_assets_value,
     bank_asset_value,
 ):
-    # Create DataFrame with the same feature names used during training
+
     data = pd.DataFrame({
         " no_of_dependents": [no_of_dependents],
         " education": [education],
@@ -42,20 +44,36 @@ demo = gr.Interface(
     fn=predict_loan,
     inputs=[
         gr.Number(label="Number of Dependents"),
+
+        gr.Dropdown(
+            choices=["Graduate", "Not Graduate"],
+            label="Education"
+        ),
+
+        gr.Dropdown(
+            choices=["Yes", "No"],
+            label="Self Employed"
+        ),
+
         gr.Number(label="Annual Income"),
         gr.Number(label="Loan Amount"),
-        gr.Number(label="Loan Term"),
+        gr.Number(label="Loan Term (Years)"),
         gr.Number(label="CIBIL Score"),
         gr.Number(label="Residential Assets Value"),
         gr.Number(label="Commercial Assets Value"),
         gr.Number(label="Luxury Assets Value"),
         gr.Number(label="Bank Asset Value"),
     ],
+
     outputs=gr.Textbox(label="Prediction"),
+
     title="Loan Approval Prediction",
-    description="Enter the applicant details to predict loan approval."
+
+    description="Enter applicant details to predict loan approval."
 )
 
 if __name__ == "__main__":
-    # Render network configuration
-    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860))
+    )
