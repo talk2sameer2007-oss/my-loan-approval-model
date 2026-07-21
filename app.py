@@ -7,6 +7,8 @@ model = joblib.load("my_loan_approval_model.pkl")
 
 def predict_loan(
     no_of_dependents,
+    education,
+    self_employed,
     income_annum,
     loan_amount,
     loan_term,
@@ -19,6 +21,8 @@ def predict_loan(
     # Create DataFrame with the same feature names used during training
     data = pd.DataFrame({
         " no_of_dependents": [no_of_dependents],
+        " education": [education],
+        " self_employed": [self_employed],
         " income_annum": [income_annum],
         " loan_amount": [loan_amount],
         " loan_term": [loan_term],
@@ -52,4 +56,6 @@ demo = gr.Interface(
     description="Enter the applicant details to predict loan approval."
 )
 
-demo.launch()
+if __name__ == "__main__":
+    # Render network configuration
+    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
