@@ -56,7 +56,7 @@ def predict_loan(
 
         prediction = model.predict(input_df)[0]
 
-        if prediction == 1 or prediction == " Approved":
+        if prediction == 0 or prediction == " Approved":
             return """
 ✅ Loan Approved
 
