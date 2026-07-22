@@ -8,7 +8,7 @@ import gradio as gr
 # ==========================================================
 
 try:
-    model = joblib.load("Loan_Prediction_Model.pkl")
+    model = joblib.load("Loan_Prediction.pkl")
 except Exception as e:
     print(e)
     model = None
